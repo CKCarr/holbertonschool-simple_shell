@@ -52,6 +52,11 @@ int execute_child(char **argv, int status)
 {
 	pid_t child_pid = 0;
 
+	if (access(argv[0], X_OK) != 0)
+	{
+		perror("Command not found or not executable");
+		return (status);
+	}
 	child_pid = fork();
 	if (child_pid == -1)
 		return (WEXITSTATUS(status));
