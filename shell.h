@@ -40,7 +40,7 @@ char **tokenizer(char *line, char *delim);
 
 char **find_path(char **environ);
 
-char *_check_argv(char *command, char **envp);
+char *get_executable_path(char *command, char **envp);
 
 char *read_line(char *line, size_t line_size, int status);
 

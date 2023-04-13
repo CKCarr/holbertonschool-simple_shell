@@ -1,14 +1,15 @@
 #include "shell.h"
-
 /**
- * _check_argv - check of argv
- * @command: Command recived
- * @envp: PATH
- * Return: concat, NULL
+ * get_executable_path - search for full path of an exec
+ * filein the directories listed un PATH
+ * @command: name of command to search for
+ * @envp: array of strings for environ vars w/ path var
+ * Return: if exec file found return buffered string
+ * of full path to file, otherwise NULL
  */
-char *_check_argv(char *command, char **envp)
+char *get_executable_path(char *command, char **envp)
 {
-	char *concat = NULL;
+	char *executable_path = NULL;
 	struct stat st;
 	int i = 0, len_command = 0, len_envp = 0;
 
@@ -20,21 +21,21 @@ char *_check_argv(char *command, char **envp)
 		len_command = _strlen(command);
 		len_envp = _strlen(envp[i]);
 
-		concat = malloc(sizeof(char) * (len_command + len_envp) + 2);
+		executable_path = malloc(sizeof(char) * (len_command + len_envp) + 2);
 
-		if (concat == NULL)
+		if (executable_path == NULL)
 			return (NULL);
 
-		_strcpy(concat, envp[i]);
-		_strcat(concat, "/");
-		_strcat(concat, command);
+		_strcpy(executable_path, envp[i]);
+		_strcat(executable_path, "/");
+		_strcat(executable_path, command);
 
-		if (stat(concat, &st) == 0)
+		if (stat(executable_path, &st) == 0)
 		{
 			free(command);
-			return (concat);
+			return (executable_path);
 		}
-		free(concat);
+		free(executable_path);
 	}
 	print_error(command);
 	free(command);

@@ -32,7 +32,7 @@ int main(void)
 			continue;
 		}
 		envp = find_path(environ);
-		argv[0] = _check_argv(argv[0], envp);
+		argv[0] = get_executable_path(argv[0], envp);
 		if (!argv[0])
 		{	all_free(argv, envp, line);
 			status = FILE_NOT_FOUND;

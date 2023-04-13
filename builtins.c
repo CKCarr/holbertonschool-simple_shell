@@ -80,3 +80,35 @@ void free_tokens(char **tokens, int count)
 	}
 	free(tokens);
 }
+/**
+ * _getenv - get env variables
+ * @env_var: env variable
+ * Return: env variable result, its content
+ */
+char *_getenv(char *env_var)
+{
+	int env_var_indx = 0;
+	size_t len;
+	char *value;
+
+	if (!env_var)
+	{
+		perror("_getenv: invalid");
+		return (NULL);
+	}
+	len = _strlen(env_var);
+	while (environ[env_var_indx])
+	{
+		if (_strncmp(env_var, environ[env_var_indx], len) == 0)
+		{
+			if (environ[env_var_indx][len] == '=')
+			{
+				value = environ[env_var_indx] + len + 1;
+				return (value);
+			}
+			env_var_indx++;
+		}
+	}
+	perror("_getenv: environment variable not found");
+	return (NULL);
+}
