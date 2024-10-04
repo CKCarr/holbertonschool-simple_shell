@@ -13,7 +13,7 @@ int prompt(void)
 }
 
 /**
- *tokenizer - Functions that separates cmd & delimiters
+ *tokenizer - Functions that seperates cmd & delimiters
  *@line: Command inserted by user
  *@delim: Delimiter
  *Return: The arguments that make up the commands
@@ -29,33 +29,51 @@ char **tokenizer(char *line, char *delim)
 	{	perror("malloc");
 		return (NULL); }
 	_strcpy(copy_line, line);
+
+	// 1st count # of tokens
 	token = strtok(line, delim);
 	while (token != NULL)
-		token = strtok(NULL, delim), count_token++;
+	{
+		token = strtok(NULL, delim)
+		count_token++;
+	}
 	count_token++;
 
-	argv = _calloc(count_token + 8, sizeof(char *));
+	// 2nd allocate mem for array of tokens(argv)
+	argv = _calloc(count_token, sizeof(char *));
 	if (!argv)
-	{	perror("calloc");
+	{
+		perror("calloc");
 		free(copy_line);
-		return (NULL); }
+		return (NULL);
+	}
+
+	// Use copy of input and tokenize again
 	token = strtok(copy_line, delim);
 	while (token != NULL)
 	{
+		// allocate memory for each token in argv
 		argv[i] = malloc(sizeof(char) * (_strlen(token) + 1));
 		if (!argv[i])
 		{	perror("malloc");
-			free_tokens(argv, i);
+			free_tokens(argv);
 			free(copy_line);
-			return (NULL); }
-		_strcpy(argv[i], token), i++, token = strtok(NULL, delim);
+			return (NULL);
+		}
+		_strcpy(argv[i], token);
+		i++;
+		token = strtok(NULL, delim);
 	}
+
+	// if no tokens found free memory
 	if (!argv[0])
 	{
-		free_tokens(argv, i), free(copy_line);
+		free_tokens(argv);
+		free(copy_line);
 		return (NULL);
 	}
-	free(copy_line), argv[i] = NULL;
+	free(copy_line);
+	argv[i] = NULL;
 	return (argv);
 }
 
@@ -138,7 +156,6 @@ void *_calloc(unsigned int nmemb, unsigned int size)
 
 	if (!array)
 	{
-		free(array);
 		return (NULL);
 	}
 

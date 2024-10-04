@@ -24,7 +24,11 @@ char *get_executable_path(char *command, char **envp)
 		executable_path = malloc(sizeof(char) * (len_command + len_envp) + 2);
 
 		if (executable_path == NULL)
+		{
+			perror("malloc");
 			return (NULL);
+		}
+
 
 		_strcpy(executable_path, envp[i]);
 		_strcat(executable_path, "/");
@@ -32,13 +36,11 @@ char *get_executable_path(char *command, char **envp)
 
 		if (stat(executable_path, &st) == 0)
 		{
-			free(command);
 			return (executable_path);
 		}
 		free(executable_path);
 	}
 	print_error(command);
-	free(command);
 	return (NULL);
 }
 

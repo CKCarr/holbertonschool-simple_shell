@@ -76,7 +76,7 @@ void print_shell_help(void);
 
 void env_print(void);
 
-void free_tokens(char **tokens, int count);
+void free_tokens(char **tokens);
 /* Macros */
 
 #define TRUE 1

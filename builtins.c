@@ -58,25 +58,20 @@ void print_shell_help(void)
   * free_tokens - function that frees tokenized args
   * of user cli
   * @tokens: the args string parsed
-  * @count: the number of args to parse
   * Return: Always 0
   */
-void free_tokens(char **tokens, int count)
+void free_tokens(char **tokens)
 {
 	int indx;
 
-	if (count <= 0)
+	if (tokens == NULL)
 	{
 		return;
 	}
-	if (tokens == NULL || tokens[0] == NULL)
-	{
-		perror("tokens");
-		return;
-	}
-	for (indx = 0; indx < count; indx++)
+	while (tokens[indx] != NULL)
 	{
 		free(tokens[indx]);
+		indx++;
 	}
 	free(tokens);
 }
