@@ -339,13 +339,14 @@ The hsh command includes a custom man page to provide usage instructions.
 Install the Man Page: To install the man page, copy hsh.1 to the correct man page directory:
 
 ```bash
+sudo mkdir -p /usr/local/man/man1
 sudo cp hsh.1 /usr/local/man/man1/
-sudo mandb
 ```
 
 Access the Man Page: Once installed, you can access the manual using:
 
 ```bash
+sudo mandb
 man hsh
 ```
 
